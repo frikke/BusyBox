@@ -19,8 +19,10 @@ repositories {
 
 android {
   compileSdkVersion 26
-  buildToolsVersion "26.0.1"
+  buildToolsVersion '27.0.3'
 
+
+  flavorDimensions "default"
   productFlavors {
     free {
       applicationId "com.jrummy.busybox.installer"
@@ -84,42 +86,47 @@ ext {
 }
 
 dependencies {
-  compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
-  compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
-  compile "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
-  compile "com.android.support:support-v13:$SUPPORT_LIBRARY_VERSION"
-  compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
-  compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
+  implementation "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
+  implementation "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
+  implementation "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
+  implementation "com.android.support:support-v13:$SUPPORT_LIBRARY_VERSION"
+  implementation "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
+  implementation "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
 
-  stagingCompile 'com.google.firebase:firebase-ads:11.6.0'
-  stagingCompile 'com.anjlab.android.iab.v3:library:1.0.32'
+  stagingImplementation 'com.google.firebase:firebase-ads:11.6.0'
+  stagingImplementation 'com.anjlab.android.iab.v3:library:1.0.32'
 
-  freeCompile 'com.google.firebase:firebase-ads:11.6.0'
-  freeCompile 'com.anjlab.android.iab.v3:library:1.0.32'
-  freeCompile 'com.jaredrummler:android-device-names:1.1.4'
+  freeImplementation 'com.google.firebase:firebase-ads:11.6.0'
+  freeImplementation 'com.anjlab.android.iab.v3:library:1.0.32'
+  freeImplementation 'com.jaredrummler:android-device-names:1.1.4'
 
-  compile 'com.jrummyapps:sweetsweetdesserts:1.0.0'
-  compile 'com.jaredrummler:material-spinner:1.0.9'
-  compile 'com.jaredrummler:fastscroll-recyclerview:1.0.1'
-  compile 'org.apache.commons:commons-compress:1.5'
-  compile 'com.commit451:elasticdragdismisslayout:1.0.2'
-  compile 'com.jrummyapps:texteditor:2.1.0'
+  implementation 'com.jrummyapps:sweetsweetdesserts:1.0.0'
+  implementation 'com.jaredrummler:material-spinner:1.0.9'
+  implementation 'com.jaredrummler:fastscroll-recyclerview:1.0.1'
+  implementation 'org.apache.commons:commons-compress:1.5'
+  implementation 'com.commit451:elasticdragdismisslayout:1.0.2'
+  implementation 'com.jrummyapps:texteditor:2.1.0'
 
-  compile 'com.jrummyapps:downloader:2.0.0'
-  compile 'com.jrummyapps:morphing-dialog:1.0.0'
-  compile 'com.jrummyapps:html-builder:1.0.1'
-  compile 'com.jrummyapps:legacy-obfuscate:1.0.0'
-  compile 'com.google.code.gson:gson:2.4'
+  implementation 'com.jrummyapps:downloader:2.0.0'
+  implementation 'com.jrummyapps:morphing-dialog:1.0.0'
+  implementation 'com.jrummyapps:html-builder:1.0.1'
+  implementation 'com.jrummyapps:legacy-obfuscate:1.0.0'
+  implementation 'com.google.code.gson:gson:2.4'
 
   /* Remote Config */
-  compile 'com.google.firebase:firebase-config:11.6.0'
+  implementation 'com.google.firebase:firebase-config:11.6.0'
 
   /* Firebase push notifications */
-  compile 'com.google.firebase:firebase-messaging:11.6.0'
+  implementation 'com.google.firebase:firebase-messaging:11.6.0'
 
-  compile 'com.jaredrummler:animated-svg-view:1.0.5'
+  implementation 'com.jaredrummler:animated-svg-view:1.0.5'
 
-  compile 'com.android.support:multidex:1.0.1'
+  implementation 'com.android.support:multidex:1.0.1'
+
+  implementation('com.google.android.ads.consent:consent-library:1.0.4') {
+    transitive = true
+    exclude group: "com.android.support"
+  }
 }
 
 apply plugin: 'com.google.gms.google-services'

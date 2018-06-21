@@ -16,18 +16,28 @@
 
 package com.jrummy.busybox.installer.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.crashlytics.android.Crashlytics;
+import com.google.ads.consent.ConsentInfoUpdateListener;
+import com.google.ads.consent.ConsentInformation;
+import com.google.ads.consent.ConsentStatus;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -87,6 +97,7 @@ public class MainActivity extends com.jrummyapps.busybox.activities.MainActivity
         }
 
         EventBus.getDefault().register(this);
+        checkGdprConsent();
 
         adContainer = (RelativeLayout) findViewById(R.id.ad_view);
         bp = new BillingProcessor(this, Monetize.decrypt(Monetize.ENCRYPTED_LICENSE_KEY), this);
@@ -255,6 +266,53 @@ public class MainActivity extends com.jrummyapps.busybox.activities.MainActivity
             RootCheckDialog.show(this, DeviceNameHelper.getSingleton().getName());
             rootDialogShown = true;
         }
+    }
+
+    private void checkGdprConsent() {
+        ConsentInformation consentInformation = ConsentInformation.getInstance(getApplicationContext());
+        String[] publisherIds = {"pub-4229758926684576"};
+        consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
+            @Override
+            public void onConsentInfoUpdated(ConsentStatus consentStatus) {
+                boolean isEea = ConsentInformation.getInstance(getApplicationContext()).
+                        isRequestLocationInEeaOrUnknown();
+                if (isEea) {
+                    if (consentStatus == ConsentStatus.UNKNOWN) {
+                        //displayConsentForm();
+                        displayCustomConsetForm();
+                    }
+                }else{
+                    Log.i("Ads","User is not in EU");
+                }
+            }
+
+            @Override
+            public void onFailedToUpdateConsentInfo(String errorDescription) {
+                // User's consent status failed to update.
+                Toast.makeText(getApplicationContext(), errorDescription, Toast.LENGTH_SHORT)
+                        .show();
+
+            }
+        });
+    }
+
+
+    private void displayCustomConsetForm() {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle("Important");
+        alertDialog.setMessage(Html.fromHtml("By choosing Accept, I agree with the <a href=\"http://maplemedia.io/privacy\">Terms of Use</a> and <a href=\"http://maplemedia.io/privacy\">Privacy Policy.</a>"));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // We update the user consent status for PERSONALIZED ads.
+                ConsentInformation.getInstance(getBaseContext()).setConsentStatus(ConsentStatus.PERSONALIZED);
+            }
+        });
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+
     }
 
     private void showTabInterstitials() {
