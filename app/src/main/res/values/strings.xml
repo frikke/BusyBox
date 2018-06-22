@@ -66,6 +66,8 @@
   <string name="create_script">Create script</string>
   <string name="a_script_with_that_name_already_exists">A script with that name already exists</string>
   <string name="an_error_occurred_while_creating_the_file">An error occurred while creating the file</string>
+  <string name="gdpr_consent_dialog_title">We\'ve Updated our Terms &amp; Privacy Policy</string>
+  <string name="gdpr_consent_dialog_positive_btn">Agree</string>
 
 
 </resources>

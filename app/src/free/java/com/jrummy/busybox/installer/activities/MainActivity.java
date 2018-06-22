@@ -300,9 +300,9 @@ public class MainActivity extends com.jrummyapps.busybox.activities.MainActivity
     private void displayCustomConsetForm() {
 
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-        alertDialog.setTitle("Important");
-        alertDialog.setMessage(Html.fromHtml("By choosing Accept, I agree with the <a href=\"http://maplemedia.io/privacy\">Terms of Use</a> and <a href=\"http://maplemedia.io/privacy\">Privacy Policy.</a>"));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Accept", new DialogInterface.OnClickListener() {
+        alertDialog.setTitle(getString(R.string.gdpr_consent_dialog_title));
+        alertDialog.setMessage(Html.fromHtml("To keep using Busy Box, confirm that you are agree to our <a href=\"http://maplemedia.io/privacy\">Terms of Service</a> and <a href=\"http://maplemedia.io/privacy\">Privacy Policy."));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,getString(R.string.gdpr_consent_dialog_positive_btn), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // We update the user consent status for PERSONALIZED ads.
