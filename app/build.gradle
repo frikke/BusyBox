@@ -82,7 +82,7 @@ android {
 }
 
 ext {
-  SUPPORT_LIBRARY_VERSION = "26.1.0"
+  SUPPORT_LIBRARY_VERSION = "27.1.0"
 }
 
 dependencies {
@@ -93,35 +93,37 @@ dependencies {
   implementation "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
   implementation "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
 
-  stagingImplementation 'com.google.firebase:firebase-ads:11.6.0'
+  stagingImplementation 'com.google.firebase:firebase-ads:15.0.1'
   stagingImplementation 'com.anjlab.android.iab.v3:library:1.0.32'
 
-  freeImplementation 'com.google.firebase:firebase-ads:11.6.0'
+  freeImplementation 'com.google.firebase:firebase-ads:15.0.1'
   freeImplementation 'com.anjlab.android.iab.v3:library:1.0.32'
-  freeImplementation 'com.jaredrummler:android-device-names:1.1.4'
+  freeCompile 'com.jaredrummler:android-device-names:1.1.4'
 
-  implementation 'com.jrummyapps:sweetsweetdesserts:1.0.0'
-  implementation 'com.jaredrummler:material-spinner:1.0.9'
-  implementation 'com.jaredrummler:fastscroll-recyclerview:1.0.1'
-  implementation 'org.apache.commons:commons-compress:1.5'
-  implementation 'com.commit451:elasticdragdismisslayout:1.0.2'
-  implementation 'com.jrummyapps:texteditor:2.1.0'
+  compile 'com.jrummyapps:sweetsweetdesserts:1.0.0'
+  compile 'com.jaredrummler:material-spinner:1.0.9'
+  compile 'com.jaredrummler:fastscroll-recyclerview:1.0.1'
+  compile 'org.apache.commons:commons-compress:1.5'
+  compile 'com.commit451:elasticdragdismisslayout:1.0.2'
+  compile 'com.jrummyapps:texteditor:2.1.0'
 
-  implementation 'com.jrummyapps:downloader:2.0.0'
-  implementation 'com.jrummyapps:morphing-dialog:1.0.0'
-  implementation 'com.jrummyapps:html-builder:1.0.1'
-  implementation 'com.jrummyapps:legacy-obfuscate:1.0.0'
-  implementation 'com.google.code.gson:gson:2.4'
+  compile 'com.jrummyapps:downloader:2.0.0'
+  compile 'com.jrummyapps:morphing-dialog:1.0.0'
+  compile 'com.jrummyapps:html-builder:1.0.1'
+  compile 'com.jrummyapps:legacy-obfuscate:1.0.0'
+  implementation 'com.google.code.gson:gson:2.8.4'
+
+  implementation 'com.google.firebase:firebase-core:16.0.1'
 
   /* Remote Config */
-  implementation 'com.google.firebase:firebase-config:11.6.0'
+  implementation 'com.google.firebase:firebase-config:16.0.0'
 
   /* Firebase push notifications */
-  implementation 'com.google.firebase:firebase-messaging:11.6.0'
+  implementation 'com.google.firebase:firebase-messaging:17.0.0'
 
-  implementation 'com.jaredrummler:animated-svg-view:1.0.5'
+  compile 'com.jaredrummler:animated-svg-view:1.0.5'
 
-  implementation 'com.android.support:multidex:1.0.1'
+  implementation 'com.android.support:multidex:1.0.3'
 
   implementation('com.google.android.ads.consent:consent-library:1.0.4') {
     transitive = true
