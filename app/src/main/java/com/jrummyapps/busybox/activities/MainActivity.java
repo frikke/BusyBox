@@ -17,6 +17,8 @@
 
 package com.jrummyapps.busybox.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,10 +29,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.ads.consent.ConsentInfoUpdateListener;
+import com.google.ads.consent.ConsentInformation;
+import com.google.ads.consent.ConsentStatus;
 import com.jrummyapps.android.directorypicker.DirectoryPickerDialog;
 import com.jrummyapps.android.exceptions.NotImplementedException;
 import com.jrummyapps.android.files.LocalFile;
@@ -66,6 +76,7 @@ public class MainActivity extends RadiantAppCompatActivity implements
     viewPager.setAdapter(pagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
     viewPager.setCurrentItem(1);
+    checkGdprConsent();
 
     if (getIntent() != null) {
       openLink(getIntent());
@@ -122,6 +133,54 @@ public class MainActivity extends RadiantAppCompatActivity implements
     }
     super.onActivityResult(requestCode, resultCode, data);
   }
+
+  private void checkGdprConsent() {
+    ConsentInformation consentInformation = ConsentInformation.getInstance(getApplicationContext());
+    String[] publisherIds = {"pub-4229758926684576"};
+    consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
+      @Override
+      public void onConsentInfoUpdated(ConsentStatus consentStatus) {
+        boolean isEea = ConsentInformation.getInstance(getApplicationContext()).
+                isRequestLocationInEeaOrUnknown();
+        if (isEea) {
+          if (consentStatus == ConsentStatus.UNKNOWN) {
+            //displayConsentForm();
+            displayCustomConsetForm();
+          }
+        }else{
+          Log.i("Ads","User is not in EU");
+        }
+      }
+
+      @Override
+      public void onFailedToUpdateConsentInfo(String errorDescription) {
+        // User's consent status failed to update.
+        Toast.makeText(getApplicationContext(), errorDescription, Toast.LENGTH_SHORT)
+                .show();
+
+      }
+    });
+  }
+
+
+  private void displayCustomConsetForm() {
+
+    AlertDialog alertDialog = new AlertDialog.Builder(com.jrummyapps.busybox.activities.MainActivity.this).create();
+    alertDialog.setTitle(getString(R.string.gdpr_consent_dialog_title));
+    alertDialog.setMessage(Html.fromHtml("To keep using Busy Box, confirm that you are agree to our <a href=\"http://maplemedia.io/privacy\">Terms of Service</a> and <a href=\"http://maplemedia.io/privacy\">Privacy Policy."));
+    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,getString(R.string.gdpr_consent_dialog_positive_btn), new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        // We update the user consent status for PERSONALIZED ads.
+        ConsentInformation.getInstance(getBaseContext()).setConsentStatus(ConsentStatus.PERSONALIZED);
+      }
+    });
+    alertDialog.setCancelable(false);
+    alertDialog.show();
+    ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+
+  }
+
 
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
