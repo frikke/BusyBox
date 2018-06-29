@@ -20,6 +20,7 @@ package com.jrummyapps.busybox.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ import com.jrummyapps.android.files.LocalFile;
 import com.jrummyapps.android.files.external.ExternalStorageHelper;
 import com.jrummyapps.android.permiso.Permiso;
 import com.jrummyapps.android.radiant.activity.RadiantAppCompatActivity;
+import com.jrummyapps.busybox.BuildConfig;
 import com.jrummyapps.busybox.R;
 import com.jrummyapps.busybox.fragments.AppletsFragment;
 import com.jrummyapps.busybox.fragments.InstallerFragment;
@@ -78,7 +80,9 @@ public class MainActivity extends RadiantAppCompatActivity implements
     viewPager.setAdapter(pagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
     viewPager.setCurrentItem(1);
-    checkGdprConsent();
+    if(!BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.jrummy.busybox.installer")) {
+      checkGdprConsent();
+    }
 
     if (getIntent() != null) {
       openLink(getIntent());

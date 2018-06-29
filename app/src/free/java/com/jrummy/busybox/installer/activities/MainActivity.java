@@ -99,6 +99,7 @@ public class MainActivity extends com.jrummyapps.busybox.activities.MainActivity
         }
 
         EventBus.getDefault().register(this);
+
         checkGdprConsent();
 
         adContainer = (RelativeLayout) findViewById(R.id.ad_view);
@@ -300,21 +301,6 @@ public class MainActivity extends com.jrummyapps.busybox.activities.MainActivity
 
 
     private void displayCustomConsetForm() {
-
-       /* AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-        alertDialog.setTitle(getString(R.string.gdpr_consent_dialog_title));
-        alertDialog.setMessage(Html.fromHtml("To keep using Busy Box, confirm that you are agree to our <a href=\"http://maplemedia.io/privacy\">Terms of Service</a> and <a href=\"http://maplemedia.io/privacy\">Privacy Policy."));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,getString(R.string.gdpr_consent_dialog_positive_btn), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // We update the user consent status for PERSONALIZED ads.
-                ConsentInformation.getInstance(getBaseContext()).setConsentStatus(ConsentStatus.PERSONALIZED);
-            }
-        });
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-        ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());*/
-
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             // Do something for lollipop and above versions
             android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(MainActivity.this);
