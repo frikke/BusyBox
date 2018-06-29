@@ -20,11 +20,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -299,7 +301,7 @@ public class MainActivity extends com.jrummyapps.busybox.activities.MainActivity
 
     private void displayCustomConsetForm() {
 
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+       /* AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
         alertDialog.setTitle(getString(R.string.gdpr_consent_dialog_title));
         alertDialog.setMessage(Html.fromHtml("To keep using Busy Box, confirm that you are agree to our <a href=\"http://maplemedia.io/privacy\">Terms of Service</a> and <a href=\"http://maplemedia.io/privacy\">Privacy Policy."));
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,getString(R.string.gdpr_consent_dialog_positive_btn), new DialogInterface.OnClickListener() {
@@ -311,7 +313,43 @@ public class MainActivity extends com.jrummyapps.busybox.activities.MainActivity
         });
         alertDialog.setCancelable(false);
         alertDialog.show();
-        ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());*/
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            // Do something for lollipop and above versions
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(MainActivity.this);
+            LayoutInflater layoutInflater = this.getLayoutInflater();
+            builder.setView(layoutInflater.inflate(R.layout.alert_diaog_message,null));
+            builder.setTitle(getString(R.string.gdpr_consent_dialog_title));
+            builder.setPositiveButton(getString(R.string.gdpr_consent_dialog_positive_btn), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // We update the user consent status for PERSONALIZED ads.
+                    ConsentInformation.getInstance(getBaseContext()).setConsentStatus(ConsentStatus.PERSONALIZED);
+                }
+            });
+            builder.setCancelable(false);
+            android.support.v7.app.AlertDialog alertDialog1 = builder.create();
+            alertDialog1.show();
+            TextView textView = (TextView) alertDialog1.findViewById(R.id.text_message);
+            textView.setText(Html.fromHtml(getString(R.string.gdpr_consent_dialog_msg)));
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+        } else{
+            // do something for phones running an SDK before lollipop
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle(getString(R.string.gdpr_consent_dialog_title));
+            alertDialog.setMessage(Html.fromHtml(getString(R.string.gdpr_consent_dialog_msg)));
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.gdpr_consent_dialog_positive_btn), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // We update the user consent status for PERSONALIZED ads.
+                    ConsentInformation.getInstance(getBaseContext()).setConsentStatus(ConsentStatus.PERSONALIZED);
+                }
+            });
+            alertDialog.setCancelable(false);
+            alertDialog.show();
+            ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        }
 
     }
 
