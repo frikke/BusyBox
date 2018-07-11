@@ -68,7 +68,7 @@
   <string name="an_error_occurred_while_creating_the_file">An error occurred while creating the file</string>
   <string name="gdpr_consent_dialog_title">We\'ve Updated our Terms &amp; Privacy Policy</string>
   <string name="gdpr_consent_dialog_positive_btn">Agree</string>
-  <string name="gdpr_consent_dialog_msg"><![CDATA[To keep using Busy Box, confirm that you agree to our <a href=\"http://maplemedia.io/privacy\">Terms of Service</a> and <a href=\"http://maplemedia.io/privacy\">Privacy Policy.]]></string>
+  <string name="gdpr_consent_dialog_msg"><![CDATA[To keep using Busy Box, confirm that you agree to our <a href=\"http://maplemedia.io/terms-of-service/\">Terms of Service</a> and <a href=\"http://maplemedia.io/privacy\">Privacy Policy.]]></string>
 
 
 </resources>
