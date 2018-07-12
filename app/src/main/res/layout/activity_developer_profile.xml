@@ -156,7 +156,7 @@
         android:layout_height="166.5dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:src="@drawable/developer_profile_jared_rummler"/>
+        android:src="@drawable/ic_account_box_white_24dp"/>
 
 
   </RelativeLayout>

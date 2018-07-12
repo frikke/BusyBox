@@ -17,21 +17,12 @@
 
 package com.jrummyapps.busybox.fragments;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.jrummyapps.android.preferences.fragments.AboutPreferenceFragment;
-import com.jrummyapps.android.radiant.Radiant;
-import com.jrummyapps.android.transitions.FabDialogMorphSetup;
-import com.jrummyapps.busybox.R;
-import com.jrummyapps.busybox.activities.DeveloperProfileActivity;
 
 public class AboutFragment extends AboutPreferenceFragment {
 
@@ -41,14 +32,14 @@ public class AboutFragment extends AboutPreferenceFragment {
   }
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    menu.add(0, R.id.action_view_profile, 0, R.string.profile)
+    /*menu.add(0, R.id.action_view_profile, 0, R.string.profile)
         .setIcon(R.drawable.ic_account_box_white_24dp)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);*/
     super.onCreateOptionsMenu(menu, inflater);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.action_view_profile) {
+    /*if (item.getItemId() == R.id.action_view_profile) {
       Radiant radiant = Radiant.getInstance(getActivity());
       Intent intent = new Intent(getActivity(), DeveloperProfileActivity.class);
       intent.putExtra(FabDialogMorphSetup.EXTRA_SHARED_ELEMENT_START_COLOR, radiant.primaryColor());
@@ -61,7 +52,7 @@ public class AboutFragment extends AboutPreferenceFragment {
       } else {
         startActivity(intent);
       }
-    }
+    }*/
     return super.onOptionsItemSelected(item);
   }
 
